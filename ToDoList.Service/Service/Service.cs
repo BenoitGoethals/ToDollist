@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using ToDollist.Domain;
-using ToDollist.Repository;
+using ToDoList.BusLayer.Domain;
+using TotDoList.DAL.Repository;
 
-namespace ToDollist.Service
+namespace ToDoList.Service.Service
 {
-    public  class Facade:IFacade<ToDo>,IFacade<Person>
+    public  class Service:IService<ToDo>,IService<Person>
     {
 
-        private static readonly Facade InstanceDoFacade=new Facade();
+        private static readonly Service InstanceDoService=new Service();
 
 
         private static readonly IReposotory<ToDo> Reposotory=new Repository<ToDo>();
@@ -62,7 +62,7 @@ namespace ToDollist.Service
             throw new NotImplementedException();
         }
 
-        Person IFacade<Person>.Get(int Id)
+        Person IService<Person>.Get(int Id)
         {
             throw new System.NotImplementedException();
         }
@@ -76,15 +76,15 @@ namespace ToDollist.Service
             return null;
         }
 
-        ToDo IFacade<ToDo>.Get(int Id)
+        ToDo IService<ToDo>.Get(int Id)
         {
             return Reposotory.Get(Id);
         }
 
 
-        public static Facade Instance()
+        public static Service Instance()
         {
-            return InstanceDoFacade;
+            return InstanceDoService;
         }
 
 

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ToDoList.BusLayer.Domain;
+using TotDoList.DAL.Repository;
 
-
-namespace UnitTestToDoList.Repository
+namespace TotDoList.DALTests.Repository
 {
     [TestClass()]
     public class RepositoryToDoTests
@@ -13,7 +13,7 @@ namespace UnitTestToDoList.Repository
         {
   
             IReposotory<ToDo> repositoryToDo=new Repository<ToDo>();
-            ToDo toDo=new ToDo("test1",new DateTime());
+            ToDo toDo=new ToDo("test1",new DateTime(),new DateTime(),Status.Created );
             repositoryToDo.Add(toDo);
             Assert.AreEqual(1,repositoryToDo.All().Count);
 
@@ -27,7 +27,7 @@ namespace UnitTestToDoList.Repository
             for (int i = 0; i < 20; i++)
             {
 
-                repositoryToDo.Add(new ToDo("test"+i, new DateTime()));
+                repositoryToDo.Add(new ToDo("test1", new DateTime(), new DateTime(), Status.Created));
                 
             }
             Assert.AreEqual(20, repositoryToDo.All().Count);
@@ -40,7 +40,7 @@ namespace UnitTestToDoList.Repository
         public void DeleteTest()
         {
             IReposotory<ToDo> repositoryToDo = new Repository<ToDo>();
-            ToDo toDo = new ToDo("test1", new DateTime());
+            ToDo toDo = new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
             repositoryToDo.Add(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Count);
             repositoryToDo.Delete(toDo);
@@ -52,7 +52,7 @@ namespace UnitTestToDoList.Repository
         public void UpdateTest()
         {
             IReposotory<ToDo> repositoryToDo = new Repository<ToDo>();
-            ToDo toDo = new ToDo("test1", new DateTime());
+            ToDo toDo =  new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
             repositoryToDo.Add(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Count);
             toDo.Description=("sdfsdf");

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToDollist.Domain;
+﻿using System.Collections.Generic;
+using ToDoList.BusLayer.Domain;
 
-namespace ToDollist.Repository
+namespace TotDoList.DAL.Repository
 {
     public interface IReposotory<T> where T:Identity
     {
