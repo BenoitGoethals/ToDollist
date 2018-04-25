@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ToDoList.BusLayer.Domain;
+using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
+using ToDoList.Domain;
 
 namespace TotDoList.DAL.Repository
 {
-    public class Repository<T>:IReposotory<T> where T:Identity
+    public class RepositoryMeM<T>:IReposotory<T> where T:Identity
     {
 
-        private readonly List<Identity> _list =new List<Identity>();
+        private readonly List<T> _list =new List<T>();
 
 
         public void Add(T t)
@@ -36,17 +38,17 @@ namespace TotDoList.DAL.Repository
 
        
 
-        public List<Identity> All()
+        public async Task<List<T>> All()
         {
-           return _list;
+            return await Task.FromResult(_list);
         }
 
-        public T Get(int id)
+        public Task<T> Get(int id)
         {
             foreach (var identity in _list)
             {
                 var toDo = (T) identity;
-                if (toDo.Id.Equals(id)) return toDo;
+                if (toDo.Id.Equals(id)) return Task.FromResult(toDo);
             }
             return null;
         }

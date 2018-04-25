@@ -1,16 +1,17 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToDoList.BusLayer.Domain
+namespace ToDoList.Domain
 {
-   public class ToDo:Identity
+    [Table("ToDo")]
+    public class ToDo:Identity
     {
+
         private string _description;
         private DateTime _dateTimeCreated;
         private DateTime _expireDate;
         private Status _statusTask;
-
+        public Person Person { get; set; }
 
         public ToDo()
         {
@@ -24,6 +25,7 @@ namespace ToDoList.BusLayer.Domain
             this.StatusTask = status;
         }
 
+        [Column("Description")]
         public String Description
         {
             get { return _description; }
@@ -33,7 +35,7 @@ namespace ToDoList.BusLayer.Domain
                 OnPropertyChanged(nameof(Description));
             }
         }
-
+        [Column("DateTimeCreated")]
         public DateTime DateTimeCreated
         {
             get { return _dateTimeCreated; }
@@ -43,7 +45,7 @@ namespace ToDoList.BusLayer.Domain
                 OnPropertyChanged(nameof(DateTimeCreated));
             }
         }
-
+        [Column("ExpireDate")]
         public DateTime ExpireDate
         {
             get { return _expireDate; }
@@ -53,7 +55,7 @@ namespace ToDoList.BusLayer.Domain
                 OnPropertyChanged(nameof(ExpireDate));
             }
         }
-
+        [Column("StatusTask")]
         public Status StatusTask
         {
             get { return _statusTask; }
@@ -61,14 +63,10 @@ namespace ToDoList.BusLayer.Domain
                 OnPropertyChanged(nameof(StatusTask)); }
         }
 
-        public Person Person { get; set; }
+       
        
         
 
-        public override string ToString()
-        {
-            return $"{nameof(Id)}: {Id}, {nameof(Description)}: {Description}, {nameof(DateTimeCreated)}: {DateTimeCreated}";
-        }
 
     }
 

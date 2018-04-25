@@ -3,40 +3,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToDoList.BusLayer.Domain;
+using ToDoList.Domain;
+using TotDoList.DAL.Repository;
 
 namespace ToDoList.Service.Service
 {
    public class ServicePerson:IService<Person>
     {
-        public void Add(Person t)
+    
+        private readonly IReposotory<Person> _reposotoryPerson = new RepositoryMeM<Person>();
+
+        public ServicePerson()
         {
-            throw new NotImplementedException();
+        }
+
+        public ServicePerson(IReposotory<Person> reposotoryPerson)
+        {
+            this._reposotoryPerson = reposotoryPerson;
+        }
+
+        public  void Add(Person t)
+        {
+            _reposotoryPerson.Add(t);
+        }
+
+        public void Delete(int idDelete)
+        {
+        
+   
+                _reposotoryPerson.Delete(idDelete);
         }
 
         public void Delete(Person t)
         {
-            throw new NotImplementedException();
+            _reposotoryPerson.Delete(t);
         }
 
-        public void Delete<T>(int idDelete)
-        {
-            throw new NotImplementedException();
-        }
+       
+
 
         public void Update(Person t)
         {
-            throw new NotImplementedException();
+            _reposotoryPerson.Update(t);
         }
 
-        public List<Identity> All<T>()
+       
+        
+
+     
+
+        public async Task<List<Person>> All()
         {
-            throw new NotImplementedException();
+
+            return await  _reposotoryPerson.All();
+           
         }
 
-        public Person Get(int Id)
+        public async Task<Person> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _reposotoryPerson.Get(id);
         }
+
+
+        public override string ToString()
+        {
+            return $"{nameof(_reposotoryPerson)}: {_reposotoryPerson}";
+        }
+
+
     }
 }
