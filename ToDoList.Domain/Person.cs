@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToDoList.BusLayer.Domain
+namespace ToDoList.Domain
 {
 
+    [Table("Person")]
     public class Person : Identity
     {
        private string _name;

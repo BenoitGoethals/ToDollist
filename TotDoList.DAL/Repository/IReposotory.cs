@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using ToDoList.BusLayer.Domain;
+using System.Threading.Tasks;
+using ToDoList.Domain;
 
 namespace TotDoList.DAL.Repository
 {
@@ -8,8 +9,8 @@ namespace TotDoList.DAL.Repository
         void Add(T toDo);
         void Delete(T toDo);
         void Update(T toDo);
-        List<Identity> All();
-        T Get(int id);
+        Task<List<T>> All();
+        Task<T> Get(int id);
         void Delete(int idDelete);
     }
 }

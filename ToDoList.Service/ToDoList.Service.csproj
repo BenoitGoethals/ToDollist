@@ -44,15 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Service.cs" />
     <Compile Include="Service\IService.cs" />
     <Compile Include="Service\ServicePerson.cs" />
     <Compile Include="Service\ServiceToDo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoList.BusLayer\ToDoList.BusLayer.csproj">
-      <Project>{710138fb-f928-47f1-a18e-345a23ff28b6}</Project>
-      <Name>ToDoList.BusLayer</Name>
+    <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj">
+      <Project>{647f5ceb-823b-4bff-a892-02d083ff8565}</Project>
+      <Name>ToDoList.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TotDoList.DAL\TotDoList.DAL.csproj">
       <Project>{aa97e59a-f201-4210-ad47-4fbb9e5e85d0}</Project>

@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.PresentationWPF", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotDoList.DALTests", "TotDoList.DALTests\TotDoList.DALTests.csproj", "{2777AA47-DC66-41D1-95D3-CA2EBE112813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.ServiceTests", "ToDoList.ServiceTests\ToDoList.ServiceTests.csproj", "{3CE123ED-BA6B-4E3B-AF97-FDA40216A018}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Domain", "ToDoList.Domain\ToDoList.Domain.csproj", "{647F5CEB-823B-4BFF-A892-02D083FF8565}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{2777AA47-DC66-41D1-95D3-CA2EBE112813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2777AA47-DC66-41D1-95D3-CA2EBE112813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2777AA47-DC66-41D1-95D3-CA2EBE112813}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CE123ED-BA6B-4E3B-AF97-FDA40216A018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CE123ED-BA6B-4E3B-AF97-FDA40216A018}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CE123ED-BA6B-4E3B-AF97-FDA40216A018}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CE123ED-BA6B-4E3B-AF97-FDA40216A018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647F5CEB-823B-4BFF-A892-02D083FF8565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647F5CEB-823B-4BFF-A892-02D083FF8565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647F5CEB-823B-4BFF-A892-02D083FF8565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647F5CEB-823B-4BFF-A892-02D083FF8565}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

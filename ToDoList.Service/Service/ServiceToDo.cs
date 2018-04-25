@@ -3,40 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToDoList.BusLayer.Domain;
+using ToDoList.Domain;
+using TotDoList.DAL.Repository;
 
 namespace ToDoList.Service.Service
 {
-    public class ServiceToDo:IService<Person>
+    public class ServiceToDo:IService<ToDo>
     {
-        public void Add(Person t)
+       
+        private readonly  IReposotory<ToDo> _reposotory = new RepositoryMeM<ToDo>();
+
+
+        public ServiceToDo()
         {
-            throw new NotImplementedException();
         }
 
-        public void Delete(Person t)
+        public ServiceToDo(IReposotory<ToDo> reposotory)
         {
-            throw new NotImplementedException();
+            this._reposotory = reposotory;
         }
+
+
+
+        public void Add(ToDo toDo)
+        {
+            _reposotory.Add(toDo);
+        }
+
+        public void Delete(ToDo toDo)
+        {
+            _reposotory.Delete(toDo);
+        }
+
+        public void Delete(int idDelete)
+        {
+           _reposotory.Delete(idDelete);
+        }
+
+
+        public void Update(ToDo toDo)
+        {
+            _reposotory.Update(toDo);
+        }
+
+        public async Task<List<ToDo>> All()
+        {
+            return await _reposotory.All();
+        }
+
+        public async Task<ToDo> Get(int Id)
+        {
+            return await _reposotory.Get(Id);
+        }
+
 
         public void Delete<T>(int idDelete)
         {
-            throw new NotImplementedException();
+      
+                _reposotory.Delete(idDelete);
+          
         }
 
-        public void Update(Person t)
-        {
-            throw new NotImplementedException();
-        }
 
-        public List<Identity> All<T>()
+        
+        public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-        public Person Get(int Id)
-        {
-            throw new NotImplementedException();
+            return $"{nameof(_reposotory)}: {_reposotory}";
         }
     }
 }

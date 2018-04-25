@@ -98,9 +98,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoList.BusLayer\ToDoList.BusLayer.csproj">
-      <Project>{710138fb-f928-47f1-a18e-345a23ff28b6}</Project>
-      <Name>ToDoList.BusLayer</Name>
+    <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj">
+      <Project>{647f5ceb-823b-4bff-a892-02d083ff8565}</Project>
+      <Name>ToDoList.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\ToDoList.Service\ToDoList.Service.csproj">
       <Project>{24c1d446-7b08-4ad9-954e-f193603aece8}</Project>

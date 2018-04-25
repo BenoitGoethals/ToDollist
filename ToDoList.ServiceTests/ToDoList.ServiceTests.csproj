@@ -60,9 +60,6 @@
     <Compile Include="Service\FacadeTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ToDoList.Service\ToDoList.Service.csproj">
       <Project>{24C1D446-7B08-4AD9-954E-F193603AECE8}</Project>
       <Name>ToDoList.Service</Name>

@@ -67,6 +67,10 @@
       <Project>{710138FB-F928-47F1-A18E-345A23FF28B6}</Project>
       <Name>ToDoList.BusLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj">
+      <Project>{647F5CEB-823B-4BFF-A892-02D083FF8565}</Project>
+      <Name>ToDoList.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TotDoList.DAL\TotDoList.DAL.csproj">
       <Project>{AA97E59A-F201-4210-AD47-4FBB9E5E85D0}</Project>
       <Name>TotDoList.DAL</Name>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ToDoList.BusLayer.Domain;
+using System.Threading.Tasks;
+using ToDoList.Domain;
 
 namespace ToDoList.Service.Service
 {
@@ -8,10 +9,10 @@ namespace ToDoList.Service.Service
     {
     void Add(T t);
     void Delete(T t);
-    void Delete<T>(int idDelete);
+    void Delete(int idDelete);
     void Update(T t);
-    List<Identity> All<T>();
-    T Get(int Id);
+    Task<List<T>> All();
+    Task<T> Get(int Id);
 
     }
 }

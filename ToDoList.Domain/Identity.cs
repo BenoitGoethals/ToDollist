@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
-using ToDoList.BusLayer.Annotations;
 
-namespace ToDoList.BusLayer.Domain
+namespace ToDoList.Domain
 {
+    [Table("Identity")]
     public abstract class Identity: INotifyPropertyChanged
     {
+        [Key]
         public int Id { get; set; }
 
         protected bool Equals(Identity other)
@@ -23,8 +26,7 @@ namespace ToDoList.BusLayer.Domain
 
         public override int GetHashCode() => Id;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
+        
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
