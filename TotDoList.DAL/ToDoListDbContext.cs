@@ -18,7 +18,7 @@ namespace TotDoList.DAL
         // If you wish to target a different database and/or database provider, modify the 'ToDoListDbContext' 
         // connection string in the application configuration file.
         public ToDoListDbContext()
-            : base("name=ToDoListDbContext")
+            : base("name=ToDoConnectionString")
         {
         }
 
@@ -35,18 +35,18 @@ namespace TotDoList.DAL
             //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
 
             // Remove pluralizing tablenames
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
+            // modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
             // Remove cascading delete for all required-relationships
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            //     modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //   modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             // 'Ticket.TicketNumber' as unique identifier
-          //  modelBuilder.Entity<Ticket>().HasKey(t => t.TicketNumber);
+            //  modelBuilder.Entity<Ticket>().HasKey(t => t.TicketNumber);
 
             // 'Ticket.State' as index
-           // modelBuilder.Entity<Ticket>().Property(t => t.State)
-             //   .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
+            // modelBuilder.Entity<Ticket>().Property(t => t.State)
+            //   .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
         } 
     }
 

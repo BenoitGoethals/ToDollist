@@ -24,7 +24,7 @@ namespace ToDoList.Service.Service
 
         public  void Add(Person t)
         {
-            _reposotoryPerson.Add(t);
+            _reposotoryPerson.AddAsync(t);
         }
 
         public void Delete(int idDelete)

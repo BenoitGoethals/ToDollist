@@ -10,32 +10,41 @@ using ToDoList.Domain;
 namespace TotDoList.DAL.Repository
 {
 
-    public class ToDoRepository:IReposotory<ToDo>
+    public class ToDoRepository:IReposotory<ToDo>, IDisposable
     {
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
+
+        public void Deconstruct(out ToDoListDbContext context)
+        {
+            context = _context;
+        }
 
         private readonly ToDoListDbContext _context =new ToDoListDbContext();
 
-        public void Add(ToDo toDo)
+        public async Task AddAsync(ToDo toDo)
         {
             _context.ToDos.Add(toDo);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(ToDo toDo)
+        public async Task Delete(ToDo toDo)
         {
             _context.ToDos.Remove(toDo);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
         }
 
-        public void Update(ToDo toDo)
+        public async Task Update(ToDo toDo)
         {
             _context.ToDos.AddOrUpdate(toDo);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
         }
 
-        public Task<List<ToDo>> All()
+        public  Task<List<ToDo>> All()
         {
-            return _context.ToDos.ToListAsync<ToDo>();
+            return  _context.ToDos.ToListAsync<ToDo>();
         }
 
         public Task<ToDo> Get(int id)
@@ -43,9 +52,9 @@ namespace TotDoList.DAL.Repository
             return _context.ToDos.FindAsync(id);
         }
 
-        public  void Delete(int idDelete)
+        public  async Task Delete(int idDelete)
         {
-             _context.ToDos.Remove(Get(idDelete).Result);
+            await Task.Run(()=> _context.ToDos.Remove(Get(idDelete).Result));
         }
     }
 }

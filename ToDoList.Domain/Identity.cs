@@ -9,6 +9,7 @@ namespace ToDoList.Domain
     public abstract class Identity: INotifyPropertyChanged
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         protected bool Equals(Identity other)

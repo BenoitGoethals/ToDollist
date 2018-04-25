@@ -27,7 +27,7 @@ namespace ToDoList.Service.Service
 
         public void Add(ToDo toDo)
         {
-            _reposotory.Add(toDo);
+            _reposotory.AddAsync(toDo);
         }
 
         public void Delete(ToDo toDo)

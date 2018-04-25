@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ToDoList.Domain;
 using TotDoList.DAL.Repository;
@@ -9,25 +10,25 @@ namespace TotDoList.DALTests.Repository
     public class RepositoryToDoTests
     {
         [TestMethod()]
-        public void AddTest()
+        public async Task AddTest()
         {
-  
-            IReposotory<ToDo> repositoryToDo=new RepositoryMeM<ToDo>();
+
+            IReposotory<ToDo> repositoryToDo = new ToDoRepository();
             ToDo toDo=new ToDo("test1",new DateTime(),new DateTime(),Status.Created );
-            repositoryToDo.Add(toDo);
+           await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1,repositoryToDo.All().Result.Count);
 
         }
 
         [TestMethod()]
-        public void AddBulkTest()
+        public async Task AddBulkTest()
         {
             
-            IReposotory<ToDo> repositoryToDo = new RepositoryMeM<ToDo>();
+            IReposotory<ToDo> repositoryToDo = new ToDoRepository();
             for (int i = 0; i < 20; i++)
             {
 
-                repositoryToDo.Add(new ToDo("test1", new DateTime(), new DateTime(), Status.Created));
+               await repositoryToDo.AddAsync(new ToDo("test1", new DateTime(), new DateTime(), Status.Created));
                 
             }
             Assert.AreEqual(20, repositoryToDo.All().Result.Count);
@@ -37,26 +38,26 @@ namespace TotDoList.DALTests.Repository
 
 
         [TestMethod()]
-        public void DeleteTest()
+        public async Task DeleteTest()
         {
-            IReposotory<ToDo> repositoryToDo = new RepositoryMeM<ToDo>();
+            IReposotory<ToDo> repositoryToDo = new ToDoRepository();
             ToDo toDo = new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
-            repositoryToDo.Add(toDo);
+            await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Result.Count);
-            repositoryToDo.Delete(toDo);
+            await repositoryToDo.Delete(toDo);
             Assert.AreEqual(0, repositoryToDo.All().Result.Count);
 
         }
 
         [TestMethod()]
-        public void UpdateTest()
+        public async Task UpdateTest()
         {
-            IReposotory<ToDo> repositoryToDo = new RepositoryMeM<ToDo>();
+            IReposotory<ToDo> repositoryToDo = new ToDoRepository();
             ToDo toDo =  new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
-            repositoryToDo.Add(toDo);
+            await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Result.Count);
             toDo.Description=("sdfsdf");
-            repositoryToDo.Update(toDo);
+            await repositoryToDo.Update(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Result.Count);
            ToDo toDo2= repositoryToDo.Get(1).Result;
             Assert.AreEqual("sdfsdf", toDo.Description);

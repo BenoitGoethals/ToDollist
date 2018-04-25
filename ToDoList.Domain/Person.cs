@@ -14,6 +14,9 @@ namespace ToDoList.Domain
        private string _zipCode;
        private Gender _gender;
 
+        public Person()
+        {
+        }
 
         public Person(string name,  string forName,  string street,  string nr,  string city,  string zipCode, Gender gender)
         {

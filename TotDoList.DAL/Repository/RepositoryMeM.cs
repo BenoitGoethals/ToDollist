@@ -12,27 +12,29 @@ namespace TotDoList.DAL.Repository
         private readonly List<T> _list =new List<T>();
 
 
-        public void Add(T t)
+        public async Task AddAsync(T t)
         {
             int highst = 0;
            if (_list.Count>0)
                  highst = _list.Max(x => x.Id);
           
             t.Id = highst + 1;
-           _list.Add(t);
+            await Task.Run(() => { _list.Add(t); });
         }
 
-        public void Delete(T t)
+        public async Task Delete(T t)
         {
-            _list.Remove(t);
+            await Task.Run(() => { _list.Remove(t);});
         }
 
-        public void Update(T t)
+        public async Task Update(T t)
         {
             if (_list.Contains(t))
             {
-                _list.Remove(t);
+                await Task.Run(() => {
+                    _list.Remove(t);
                 _list.Add(t);
+                });
             }
         }
 
@@ -53,7 +55,7 @@ namespace TotDoList.DAL.Repository
             return null;
         }
 
-        public void Delete(int idDelete)
+        public async Task Delete(int idDelete)
         {
             T delete =default(T) ;
             foreach (var identity in _list)
@@ -65,7 +67,10 @@ namespace TotDoList.DAL.Repository
                     break;
                 };
             }
-            if (delete != null) _list.Remove(delete);
+            if (delete != null)
+                await Task.Run(() => {
+                    _list.Remove(delete);
+                });
         }
 
         
