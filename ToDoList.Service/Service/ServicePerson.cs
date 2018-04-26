@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using ToDoList.Domain;
 using TotDoList.DAL.Repository;
 
@@ -11,8 +12,9 @@ namespace ToDoList.Service.Service
    public class ServicePerson:IService<Person>
     {
     
-        private readonly IReposotory<Person> _reposotoryPerson = new RepositoryMeM<Person>();
+        private readonly IReposotory<Person> _reposotoryPerson = new PersonRepository();
 
+        private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public ServicePerson()
         {
         }
@@ -20,31 +22,39 @@ namespace ToDoList.Service.Service
         public ServicePerson(IReposotory<Person> reposotoryPerson)
         {
             this._reposotoryPerson = reposotoryPerson;
+            
         }
 
-        public  void Add(Person t)
+        public async  Task Add(Person t)
         {
-            _reposotoryPerson.AddAsync(t);
+            Logger.Info($"add : {t}");
+            await _reposotoryPerson.AddAsync(t);
+           
         }
 
-        public void Delete(int idDelete)
+        public async Task Delete(int idDelete)
         {
         
-   
-                _reposotoryPerson.Delete(idDelete);
+      Logger.Info($"delete : {idDelete}");
+             await   _reposotoryPerson.Delete(idDelete);
+         
         }
 
-        public void Delete(Person t)
+        public async Task Delete(Person t)
         {
-            _reposotoryPerson.Delete(t);
+            Logger.Info($"delete : {t}");
+            await _reposotoryPerson.Delete(t);
+           
         }
 
-       
 
 
-        public void Update(Person t)
+
+        public async Task Update(Person t)
         {
-            _reposotoryPerson.Update(t);
+            Logger.Info($"Update : {t}");
+            await _reposotoryPerson.Update(t);
+          
         }
 
        
@@ -62,6 +72,13 @@ namespace ToDoList.Service.Service
         public async Task<Person> Get(int id)
         {
             return await _reposotoryPerson.Get(id);
+        }
+
+        public async Task DeleteAll()
+        {
+            Logger.Info($"Delete all : ");
+            await _reposotoryPerson.DeleteAll();
+          
         }
 
 

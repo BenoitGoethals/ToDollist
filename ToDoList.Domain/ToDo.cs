@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDoList.Domain
@@ -11,7 +12,7 @@ namespace ToDoList.Domain
         private DateTime _dateTimeCreated;
         private DateTime _expireDate;
         private Status _statusTask;
-        public Person Person { get; set; }
+        private Person _person;
 
         public ToDo()
         {
@@ -26,6 +27,7 @@ namespace ToDoList.Domain
         }
 
         [Column("Description")]
+        [Required]
         public String Description
         {
             get { return _description; }
@@ -36,6 +38,7 @@ namespace ToDoList.Domain
             }
         }
         [Column("DateTimeCreated")]
+        [Required]
         public DateTime DateTimeCreated
         {
             get { return _dateTimeCreated; }
@@ -46,6 +49,7 @@ namespace ToDoList.Domain
             }
         }
         [Column("ExpireDate")]
+        [Required]
         public DateTime ExpireDate
         {
             get { return _expireDate; }
@@ -56,6 +60,7 @@ namespace ToDoList.Domain
             }
         }
         [Column("StatusTask")]
+        [Required]
         public Status StatusTask
         {
             get { return _statusTask; }
@@ -63,11 +68,24 @@ namespace ToDoList.Domain
                 OnPropertyChanged(nameof(StatusTask)); }
         }
 
+        [ForeignKey("Person")]
+        public int? PersonId { get; set; }
+        [Column("Person")]
+        public Person Person
+        {
+            get { return _person; }
+            set
+            {
+                _person = value;
+                OnPropertyChanged(nameof(Person));
+            }
+        }
        
-       
-        
 
-
+        public override string ToString()
+        {
+            return $"{nameof(Description)}: {Description}, {nameof(DateTimeCreated)}: {DateTimeCreated}, {nameof(ExpireDate)}: {ExpireDate}, {nameof(StatusTask)}: {StatusTask}, {nameof(Person)}: {Person}";
+        }
     }
 
     public enum Status

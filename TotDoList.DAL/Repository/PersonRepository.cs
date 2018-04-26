@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -10,8 +11,7 @@ using ToDoList.Domain;
 
 namespace TotDoList.DAL.Repository
 {
-
-    public class ToDoRepository:IReposotory<ToDo>, IDisposable
+   public class PersonRepository : IReposotory<Person>, IDisposable
     {
         public void Dispose()
         {
@@ -23,16 +23,16 @@ namespace TotDoList.DAL.Repository
             context = _context;
         }
 
-        private readonly ToDoListDbContext _context =new ToDoListDbContext();
+        private readonly ToDoListDbContext _context = new ToDoListDbContext();
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public async Task AddAsync(ToDo toDo)
+        public async Task AddAsync(Person person)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    _context.ToDos.Add(toDo);
+                    _context.Persons.Add(person);
                     await _context.SaveChangesAsync();
 
                     transaction.Commit();
@@ -46,13 +46,13 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-        public async Task Delete(ToDo toDo)
+        public async Task Delete(Person person)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    _context.ToDos.Remove(toDo);
+                    _context.Persons.Remove(person);
                     await _context.SaveChangesAsync();
 
                     transaction.Commit();
@@ -66,14 +66,14 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-        public async Task Update(ToDo toDo)
+        public async Task Update(Person person)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                     _context.ToDos.AddOrUpdate(toDo);
-                     await _context.SaveChangesAsync();
+                    _context.Persons.AddOrUpdate(person);
+                    await _context.SaveChangesAsync();
 
                     transaction.Commit();
                 }
@@ -86,23 +86,33 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-        public  Task<List<ToDo>> All()
+        public Task<List<Person>> All()
         {
-            return  _context.ToDos.ToListAsync<ToDo>();
+            return _context.Persons.ToListAsync<Person>();
         }
 
-        public Task<ToDo> Get(int id)
+        public Task<Person> Get(int id)
         {
-            return _context.ToDos.FindAsync(id);
+            return _context.Persons.FindAsync(id);
         }
 
         public async Task DeleteAll()
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    await Task.Run(() => _context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {typeof(ToDo).Name}"));
+                    await Task.Run(() =>
+                    {
+                        var all= _context.Persons.ToListAsync<Person>();
+                        foreach (var pers in all.Result)
+                        {
+                            _context.Persons.Remove(pers);
+
+                        }
+                        _context.SaveChangesAsync();
+                        // return _context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {typeof(Person).Name}");
+                    });
 
                     transaction.Commit();
                 }
@@ -115,13 +125,13 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-        public  async Task Delete(int idDelete)
+        public async Task Delete(int idDelete)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    await Task.Run(()=> _context.ToDos.Remove(Get(idDelete).Result));
+                    await Task.Run(() => _context.Persons.Remove(Get(idDelete).Result));
 
                     transaction.Commit();
                 }
@@ -134,4 +144,6 @@ namespace TotDoList.DAL.Repository
             }
         }
     }
-}
+    
+    }
+

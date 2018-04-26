@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using ToDoList.Domain;
 using TotDoList.DAL.Repository;
 
@@ -11,8 +12,9 @@ namespace ToDoList.Service.Service
     public class ServiceToDo:IService<ToDo>
     {
        
-        private readonly  IReposotory<ToDo> _reposotory = new RepositoryMeM<ToDo>();
+        private readonly  IReposotory<ToDo> _reposotory = new ToDoRepository();
 
+        private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ServiceToDo()
         {
@@ -25,25 +27,29 @@ namespace ToDoList.Service.Service
 
 
 
-        public void Add(ToDo toDo)
+        public async  Task Add(ToDo toDo)
         {
-            _reposotory.AddAsync(toDo);
+           await _reposotory.AddAsync(toDo);
+            Logger.Info($"add : {toDo}");
         }
 
-        public void Delete(ToDo toDo)
+        public async Task Delete(ToDo toDo)
         {
-            _reposotory.Delete(toDo);
+            await _reposotory.Delete(toDo);
+            Logger.Info($"add : {toDo}");
         }
 
-        public void Delete(int idDelete)
+        public async Task Delete(int idDelete)
         {
-           _reposotory.Delete(idDelete);
+            await _reposotory.Delete(idDelete);
+            Logger.Info($"delete : {idDelete}");
         }
 
 
-        public void Update(ToDo toDo)
+        public async Task Update(ToDo toDo)
         {
-            _reposotory.Update(toDo);
+            await _reposotory.Update(toDo);
+            Logger.Info($"add : {toDo}");
         }
 
         public async Task<List<ToDo>> All()
@@ -56,12 +62,19 @@ namespace ToDoList.Service.Service
             return await _reposotory.Get(Id);
         }
 
+        public async Task DeleteAll()
+        {
+            await _reposotory.DeleteAll();
+            Logger.Info($"Delete all");
+        }
+
 
         public void Delete<T>(int idDelete)
         {
       
                 _reposotory.Delete(idDelete);
-          
+            Logger.Info($"delete : {idDelete}");
+
         }
 
 

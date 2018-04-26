@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDoList.Domain
 {
@@ -101,6 +102,9 @@ namespace ToDoList.Domain
                 OnPropertyChanged(nameof(Gender));
             }
         }
+
+
+        public ICollection<ToDo> ToDo { get; set; }
 
 
         public override string ToString()

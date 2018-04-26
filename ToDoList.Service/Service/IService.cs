@@ -7,12 +7,12 @@ namespace ToDoList.Service.Service
     public interface IService<T> where T : Identity
 
     {
-    void Add(T t);
-    void Delete(T t);
-    void Delete(int idDelete);
-    void Update(T t);
+    Task Add(T t);
+        Task Delete(T t);
+        Task Delete(int idDelete);
+        Task Update(T t);
     Task<List<T>> All();
     Task<T> Get(int Id);
-
+    Task DeleteAll();
     }
 }

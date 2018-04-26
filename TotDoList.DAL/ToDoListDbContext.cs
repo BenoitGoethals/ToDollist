@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using NLog;
 using ToDoList.Domain;
 
 namespace TotDoList.DAL
@@ -11,6 +12,8 @@ namespace TotDoList.DAL
     [DbConfigurationType(typeof(SupportCenterDbConfiguration))]
     public class ToDoListDbContext : DbContext
     {
+
+        private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         // Your context has been configured to use a 'ToDoListDbContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
         // 'TotDoList.DAL.ToDoListDbContext' database on your LocalDb instance. 
@@ -20,6 +23,12 @@ namespace TotDoList.DAL
         public ToDoListDbContext()
             : base("name=ToDoConnectionString")
         {
+            LogManager.ThrowExceptions = true;
+            Database.Log = s =>
+            {
+                System.Diagnostics.Debug.WriteLine(s);
+                Logger.Info(s);
+            };
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -32,13 +41,15 @@ namespace TotDoList.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            
             //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
 
             // Remove pluralizing tablenames
-            // modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
             // Remove cascading delete for all required-relationships
-            //     modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+                 modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             //   modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             // 'Ticket.TicketNumber' as unique identifier
