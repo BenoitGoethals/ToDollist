@@ -1,9 +1,12 @@
 ﻿<Application x:Class="ToDoList.PresentationWPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ToDoList.PresentationWPF"
+             xmlns:viewModel="clr-namespace:ToDoList.PresentationWPF.viewModel"
+             xmlns:view="clr-namespace:ToDoList.PresentationWPF.view"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+            <view:MainView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

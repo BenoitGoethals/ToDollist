@@ -13,6 +13,10 @@ namespace TotDoList.DAL.Repository
 {
    public class PersonRepository : IReposotory<Person>, IDisposable
     {
+        public PersonRepository()
+        {
+            _context.Database.Initialize(false);
+        }
         public void Dispose()
         {
             _context?.Dispose();

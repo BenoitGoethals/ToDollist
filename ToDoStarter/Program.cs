@@ -11,21 +11,31 @@ namespace ToDoStarter
 {
     class Program
     {
-        static void Main(string[] args)
+       public static  void Main(string[] args)
         {
             IService<ToDo> service=new ServiceToDo();
 
-           
-             service.DeleteAll();
+           // Task.Delay(TimeSpan.FromMilliseconds(1000));
 
-            for (int i = 0; i < 20; i++)
+
+      //   Task task= Task.Run(()=> service.DeleteAll());
+     //       task.Wait();
+           // Task.WaitAll();
+              for (int i = 0; i < 20; i++)
+              {
+
+                Task ta=  service.Add(new ToDo("test1-" + i, new DateTime(), new DateTime(), Status.Created));
+              }
+
+            
+            service.All().Result.ForEach(async item =>
             {
+                Console.WriteLine(item);
+            });
 
-                 service.Add(new ToDo("test1", new DateTime(), new DateTime(), Status.Created));
-
-            }
           
 
+            Console.ReadLine();
         }
     }
 }

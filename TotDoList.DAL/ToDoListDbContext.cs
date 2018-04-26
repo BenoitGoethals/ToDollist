@@ -23,6 +23,7 @@ namespace TotDoList.DAL
         public ToDoListDbContext()
             : base("name=ToDoConnectionString")
         {
+           
             LogManager.ThrowExceptions = true;
             Database.Log = s =>
             {
@@ -42,9 +43,9 @@ namespace TotDoList.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            
-            //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
 
+            //base.OnModelCreating(modelBuilder); // does nothing! (empty body)
+            
             // Remove pluralizing tablenames
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));

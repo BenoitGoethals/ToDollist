@@ -13,6 +13,11 @@ namespace TotDoList.DAL.Repository
 
     public class ToDoRepository:IReposotory<ToDo>, IDisposable
     {
+
+        public ToDoRepository()
+        {
+         //   _context.Database.Initialize(false);
+        }
         public void Dispose()
         {
             _context?.Dispose();
@@ -24,6 +29,7 @@ namespace TotDoList.DAL.Repository
         }
 
         private readonly ToDoListDbContext _context =new ToDoListDbContext();
+
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public async Task AddAsync(ToDo toDo)
