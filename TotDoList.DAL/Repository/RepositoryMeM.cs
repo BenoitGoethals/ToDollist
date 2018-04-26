@@ -73,8 +73,11 @@ namespace TotDoList.DAL.Repository
                 });
         }
 
-        
-
-        
+        public async Task DeleteAll()
+        {
+            await Task.Run(() => {
+                _list.Clear();
+            });
+        }
     }
 }

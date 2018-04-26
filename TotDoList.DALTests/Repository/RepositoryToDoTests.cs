@@ -14,6 +14,7 @@ namespace TotDoList.DALTests.Repository
         {
 
             IReposotory<ToDo> repositoryToDo = new ToDoRepository();
+           await repositoryToDo.DeleteAll();
             ToDo toDo=new ToDo("test1",new DateTime(),new DateTime(),Status.Created );
            await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1,repositoryToDo.All().Result.Count);
@@ -25,6 +26,7 @@ namespace TotDoList.DALTests.Repository
         {
             
             IReposotory<ToDo> repositoryToDo = new ToDoRepository();
+            await repositoryToDo.DeleteAll();
             for (int i = 0; i < 20; i++)
             {
 
@@ -41,6 +43,7 @@ namespace TotDoList.DALTests.Repository
         public async Task DeleteTest()
         {
             IReposotory<ToDo> repositoryToDo = new ToDoRepository();
+            await repositoryToDo.DeleteAll();
             ToDo toDo = new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
             await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Result.Count);
@@ -53,6 +56,7 @@ namespace TotDoList.DALTests.Repository
         public async Task UpdateTest()
         {
             IReposotory<ToDo> repositoryToDo = new ToDoRepository();
+            await repositoryToDo.DeleteAll();
             ToDo toDo =  new ToDo("test1", new DateTime(), new DateTime(), Status.Created);
             await repositoryToDo.AddAsync(toDo);
             Assert.AreEqual(1, repositoryToDo.All().Result.Count);

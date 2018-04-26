@@ -12,5 +12,6 @@ namespace TotDoList.DAL.Repository
         Task<List<T>> All();
         Task<T> Get(int id);
         Task Delete(int idDelete);
+        Task DeleteAll();
     }
 }

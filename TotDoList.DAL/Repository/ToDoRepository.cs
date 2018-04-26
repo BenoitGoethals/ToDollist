@@ -26,20 +26,59 @@ namespace TotDoList.DAL.Repository
 
         public async Task AddAsync(ToDo toDo)
         {
-            _context.ToDos.Add(toDo);
-            await _context.SaveChangesAsync();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    _context.ToDos.Add(toDo);
+                    await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+
+            }
         }
 
         public async Task Delete(ToDo toDo)
         {
-            _context.ToDos.Remove(toDo);
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    _context.ToDos.Remove(toDo);
            await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+
+            }
         }
 
         public async Task Update(ToDo toDo)
         {
-            _context.ToDos.AddOrUpdate(toDo);
-           await _context.SaveChangesAsync();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                     _context.ToDos.AddOrUpdate(toDo);
+                     await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+
+            }
         }
 
         public  Task<List<ToDo>> All()
@@ -52,9 +91,40 @@ namespace TotDoList.DAL.Repository
             return _context.ToDos.FindAsync(id);
         }
 
+        public async Task DeleteAll()
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await Task.Run(() => _context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {typeof(ToDo).Name}"));
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+
+            }
+        }
+
         public  async Task Delete(int idDelete)
         {
-            await Task.Run(()=> _context.ToDos.Remove(Get(idDelete).Result));
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await Task.Run(()=> _context.ToDos.Remove(Get(idDelete).Result));
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+
+            }
         }
     }
 }
