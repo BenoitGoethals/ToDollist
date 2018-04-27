@@ -87,11 +87,4 @@ namespace ToDoList.Domain
             return $"{nameof(Description)}: {Description}, {nameof(DateTimeCreated)}: {DateTimeCreated}, {nameof(ExpireDate)}: {ExpireDate}, {nameof(StatusTask)}: {StatusTask}, {nameof(Person)}: {Person}";
         }
     }
-
-    public enum Status
-    {
-        Created,
-        Started,
-        Finshed
-    }
 }

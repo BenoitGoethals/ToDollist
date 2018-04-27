@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace TotDoList.DAL.Repository
 
         public async Task AddAsync(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
@@ -54,7 +55,7 @@ namespace TotDoList.DAL.Repository
 
         public async Task Delete(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
@@ -74,7 +75,7 @@ namespace TotDoList.DAL.Repository
 
         public async Task Update(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
@@ -104,7 +105,7 @@ namespace TotDoList.DAL.Repository
 
         public async Task DeleteAll()
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
@@ -123,7 +124,7 @@ namespace TotDoList.DAL.Repository
 
         public  async Task Delete(int idDelete)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {

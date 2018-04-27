@@ -10,18 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ToDoList.PresentationWPF.view
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for AddWindow.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class AddWindow : Window
     {
-        public MainView()
+        public AddWindow()
         {
             InitializeComponent();
         }
+
+       
     }
 }
