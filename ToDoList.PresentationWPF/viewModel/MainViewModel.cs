@@ -43,7 +43,7 @@ namespace ToDoList.PresentationWPF.viewModel
 
             ToDos = new AsyncObservableCollection<ToDo>(slowTask.Result.Result);
             
-            UpdateCommand = new RelayCommand(s => this.show(s));
+            UpdateCommand = new RelayCommand(s => this.show(s), (t)=>SelectetToDo != null);
 
             DeleteCommand = new RelayCommand(t =>
             {
@@ -55,7 +55,7 @@ namespace ToDoList.PresentationWPF.viewModel
                 }
 
                 
-            });
+            },(t)=>SelectetToDo != null);
             
         }
         public NotifyTaskCompletion<List<ToDo>> UrlByteCount { get; private set; }
