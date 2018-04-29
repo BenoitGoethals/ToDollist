@@ -38,9 +38,13 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-       
+        public Task<List<T>> All()
+        {
+            return  Task.FromResult(_list);
+        }
 
-        public async Task<List<T>> All()
+
+        public async Task<List<T>> AllAsync()
         {
             return await Task.FromResult(_list);
         }

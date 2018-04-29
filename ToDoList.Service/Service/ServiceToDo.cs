@@ -11,7 +11,8 @@ namespace ToDoList.Service.Service
 {
     public class ServiceToDo:IService<ToDo>
     {
-       
+        private static IService<ToDo> service=new ServiceToDo();
+
         private readonly  IReposotory<ToDo> _reposotory = new ToDoRepository();
 
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -52,7 +53,7 @@ namespace ToDoList.Service.Service
             Logger.Info($"add : {toDo}");
         }
 
-        public async Task<List<ToDo>> All()
+        public async  Task<List<ToDo>> All()
         {
             return await _reposotory.All();
         }
@@ -82,6 +83,13 @@ namespace ToDoList.Service.Service
         public override string ToString()
         {
             return $"{nameof(_reposotory)}: {_reposotory}";
+        }
+
+
+
+        public static IService<ToDo> Instance()
+        {
+            return service;
         }
     }
 }

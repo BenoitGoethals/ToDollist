@@ -6,15 +6,16 @@
         xmlns:local="clr-namespace:ToDoList.PresentationWPF.view"
             xmlns:utils="clr-namespace:ToDoList.PresentationWPF.utils"
              xmlns:enum="clr-namespace:ToDoList.Domain;assembly=ToDoList.Domain"
-        
-        mc:Ignorable="d"
+             xmlns:viewModel="clr-namespace:ToDoList.PresentationWPF.viewModel"
+
+             mc:Ignorable="d"
          Height="450" Width="800">
 
     <Grid>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
@@ -22,9 +23,37 @@
             <Label FontSize="32" Content="ToDo"/>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <DataGrid HorizontalContentAlignment="Stretch"  AutoGenerateColumns="False" ItemsSource="{Binding ToDos}" IsReadOnly="True">
+            <ListView HorizontalContentAlignment="Stretch" 
+                      ScrollViewer.CanContentScroll="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectetToDo}"
+                   
+                      ItemsSource="{Binding ToDos}" Height="196">
 
-                <DataGrid.Columns>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Description"  Width="200" DisplayMemberBinding="{Binding Description}" />
+
+                        <GridViewColumn Header="DateTimeCreated" Width="150" DisplayMemberBinding="{Binding DateTimeCreated}" />
+                        <GridViewColumn Header="ExpireDate" Width="150" DisplayMemberBinding="{Binding ExpireDate}" />
+                        <GridViewColumn Header="StatusTask" Width="100" DisplayMemberBinding="{Binding StatusTask}" />
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                <Button Margin="5" Content="Update" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}" />
+                                <Button Margin="5 " Content="Delete" Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}" />
+                            </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+
+
+<!--
+            <ListView.Columns>
 
 
                     <DataGridTextColumn Header="Description" Width="200" Binding="{Binding Description}" />
@@ -63,12 +92,12 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                </DataGrid.Columns>
-
-            </DataGrid>
+                </ListView.Columns>
+-->
         </StackPanel>
         <StackPanel Grid.Row="2" >
-            <Button FontSize="20" Content="Add New" Command="{Binding AddCommand}"/>
+            <local:UserControlAdd/>
         </StackPanel>
+      
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@ using ToDoList.Domain;
 namespace TotDoList.DAL
 {
     public class SupportCenterDbInitializer
-        : DropCreateDatabaseAlways<ToDoListDbContext>
+        : CreateDatabaseIfNotExists<ToDoListDbContext>
     {
         protected override void Seed(ToDoListDbContext context)
         {

@@ -65,7 +65,7 @@ namespace ToDoList.Service.Service
         public async Task<List<Person>> All()
         {
 
-            return await  _reposotoryPerson.All();
+            return  await _reposotoryPerson.All();
            
         }
 

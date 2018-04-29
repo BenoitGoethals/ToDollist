@@ -1,48 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using ToDoList.Domain;
+using ToDoList.PresentationWPF.Annotations;
 using ToDoList.PresentationWPF.utils;
 using ToDoList.PresentationWPF.view;
+using ToDoList.Service.Service;
 
 namespace ToDoList.PresentationWPF.viewModel
 {
-  public  class MainViewModel
+  public  class MainViewModel:ViewModel, IViewModelNotifyer
     {
-        public RelayCommand AddCommand { get; private set; }
+
+        private object _stocksLock = new object();
+        public ToDo SelectetToDo
+        {
+            get => _selectetToDo;
+            set
+            {
+                if (Equals(value, _selectetToDo)) return;
+                _selectetToDo = value;
+                //OnPropertyChanged();
+            }
+        }
+
+
+        //    public RelayCommand AddCommand { get; private set; }
         public RelayCommand UpdateCommand { get; private set; }
         public RelayCommand DeleteCommand { get; private set; }
-        private void show()
-        {
-            MessageBox.Show("add");
-
-        }
+       
         public MainViewModel()
         {
-            _toDos.Add(new ToDo("test1", DateTime.Now, DateTime.Now.AddDays(2), Status.Created) { Id = 1 });
-            _toDos.Add(new ToDo("test2", DateTime.Now, DateTime.Now.AddDays(2), Status.Finshed) { Id = 2 });
-            _toDos.Add(new ToDo("test3", DateTime.Now, DateTime.Now.AddDays(2), Status.Created) { Id = 3 });
+            App.mediator.SenderHandler += Mediator_SenderHandler;
+            var slowTask = Task<Task<List<ToDo>>>.Factory.StartNew(() => ServiceToDo.Instance().All());
 
-
-            AddCommand = new RelayCommand(s=>this.show(s));
-
-
-
-
+            ToDos = new AsyncObservableCollection<ToDo>(slowTask.Result.Result);
+            
             UpdateCommand = new RelayCommand(s => this.show(s));
-
-
-
 
             DeleteCommand = new RelayCommand(t =>
             {
-                _toDos.Remove(t as ToDo);
+                Task.Factory.StartNew(() => ServiceToDo.Instance().Delete(_selectetToDo));
+                lock (_stocksLock)
+                {
+                    ToDos.Remove(t as ToDo);
+                 //   OnPropertyChanged("ToDos");
+                }
 
+                
             });
+            
+        }
+        public NotifyTaskCompletion<List<ToDo>> UrlByteCount { get; private set; }
+        private void Mediator_SenderHandler(object sender, ViewModelEventArgs e)
+        {
+            lock (_stocksLock)
+            {
+                ToDos.Add((ToDo) e.Client);
+        //        OnPropertyChanged("ToDos");
+            }
+            //    OnPropertyChanged("ToDos");
+
         }
 
         private void show(Object s)
@@ -52,13 +77,28 @@ namespace ToDoList.PresentationWPF.viewModel
            // MessageBox.Show("add"+((ToDo) s).Description);
         }
 
-        private ObservableCollection<ToDo> _toDos=new ObservableCollection<ToDo>();
+        private AsyncObservableCollection<ToDo> _toDos=new AsyncObservableCollection<ToDo>();
+        private ToDo _selectetToDo;
 
-        public ObservableCollection<ToDo> ToDos
+        public AsyncObservableCollection<ToDo> ToDos
         {
             get { return _toDos; }
-            set { _toDos = value; }
+            set
+            {
+                _toDos = value;
+               // OnPropertyChanged("ToDos");
+            }
         }
 
+
+        public void Nofity(ViewModelEventArgs modelEventArgs)
+        {
+            
+        }
+
+        public void Subscribe(ViewModel viewModel)
+        {
+           
+        }
     }
 }

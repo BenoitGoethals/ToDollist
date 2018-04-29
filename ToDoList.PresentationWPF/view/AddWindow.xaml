@@ -21,18 +21,18 @@
         <StackPanel Grid.Row="0">
             
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="5">
+        <StackPanel Grid.Row="1" Margin="5" DataContext="ToDo">
             <StackPanel Orientation="Horizontal"  Margin="5"> 
                 <Label Content="Description" ></Label>
-              <TextBox Width="202"  />
+              <TextBox Width="202" Text="{Binding Path=Description}"  />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
                 <Label Content="Created Date"></Label>
-                <DatePicker SelectedDate="{Binding ExpireDate}" BorderThickness="0"/>
+                <DatePicker SelectedDate="{Binding Path=ExpireDate}" BorderThickness="0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"  Margin="5">
                 <Label Content="Expire Date"></Label>
-                <DatePicker SelectedDate="{Binding ExpireDate}" BorderThickness="0"/>
+                <DatePicker SelectedDate="{Binding Path=ExpireDate}" BorderThickness="0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"  Margin="5">
                 <Label Content="Status"></Label>

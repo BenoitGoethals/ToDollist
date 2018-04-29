@@ -8,5 +8,8 @@
         <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
             <view:MainView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AddViewModel}">
+            <view:UserControlAdd/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -34,7 +34,7 @@ namespace ToDoList.Domain
             set
             {
                 _description = value; 
-                OnPropertyChanged(nameof(Description));
+         //       OnPropertyChanged(nameof(Description));
             }
         }
         [Column("DateTimeCreated")]
@@ -45,7 +45,7 @@ namespace ToDoList.Domain
             set
             {
                 _dateTimeCreated = value;
-                OnPropertyChanged(nameof(DateTimeCreated));
+        //        OnPropertyChanged(nameof(DateTimeCreated));
             }
         }
         [Column("ExpireDate")]
@@ -56,7 +56,7 @@ namespace ToDoList.Domain
             set
             {
                 _expireDate = value;
-                OnPropertyChanged(nameof(ExpireDate));
+         //       OnPropertyChanged(nameof(ExpireDate));
             }
         }
         [Column("StatusTask")]
@@ -65,7 +65,8 @@ namespace ToDoList.Domain
         {
             get { return _statusTask; }
             set { _statusTask = value;
-                OnPropertyChanged(nameof(StatusTask)); }
+  //          OnPropertyChanged(nameof(StatusTask));
+            }
         }
 
         [ForeignKey("Person")]
@@ -77,7 +78,7 @@ namespace ToDoList.Domain
             set
             {
                 _person = value;
-                OnPropertyChanged(nameof(Person));
+            //    OnPropertyChanged(nameof(Person));
             }
         }
        

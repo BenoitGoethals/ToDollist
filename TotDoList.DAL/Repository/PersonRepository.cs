@@ -15,7 +15,7 @@ namespace TotDoList.DAL.Repository
     {
         public PersonRepository()
         {
-            _context.Database.Initialize(false);
+         //   _context.Database.Initialize(false);
         }
         public void Dispose()
         {
@@ -90,9 +90,9 @@ namespace TotDoList.DAL.Repository
             }
         }
 
-        public Task<List<Person>> All()
+        public async Task<List<Person>> All()
         {
-            return _context.Persons.ToListAsync<Person>();
+            return await _context.Persons.ToListAsync();
         }
 
         public Task<Person> Get(int id)

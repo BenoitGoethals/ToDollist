@@ -12,35 +12,31 @@ using ToDoList.Domain;
 namespace TotDoList.DAL.Repository
 {
 
-    public class ToDoRepository:IReposotory<ToDo>, IDisposable
+    public class ToDoRepository:IReposotory<ToDo>
     {
 
         public ToDoRepository()
         {
          //   _context.Database.Initialize(false);
         }
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        
 
-        public void Deconstruct(out ToDoListDbContext context)
-        {
-            context = _context;
-        }
+       
 
-        private readonly ToDoListDbContext _context =new ToDoListDbContext();
+       // private readonly ToDoListDbContext _context =new ToDoListDbContext();
 
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public async Task AddAsync(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                using (var transaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    _context.ToDos.Add(toDo);
-                    await _context.SaveChangesAsync();
+                    context.ToDos.Add(toDo);
+                    await context.SaveChangesAsync();
 
                     transaction.Commit();
                 }
@@ -49,18 +45,21 @@ namespace TotDoList.DAL.Repository
                     Logger.Error(ex);
                     transaction.Rollback();
                 }
-
+            }
             }
         }
 
         public async Task Delete(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                using (var transaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                    _context.ToDos.Remove(toDo);
-                    await _context.SaveChangesAsync();
+                    context.ToDos.Attach(toDo);
+                        context.ToDos.Remove(toDo);
+                    await context.SaveChangesAsync();
 
                     transaction.Commit();
                 }
@@ -69,18 +68,21 @@ namespace TotDoList.DAL.Repository
                     Logger.Error(ex);
                     transaction.Rollback();
                 }
-
+            }
             }
         }
 
         public async Task Update(ToDo toDo)
         {
-            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                using (var transaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
                 try
                 {
-                     _context.ToDos.AddOrUpdate(toDo);
-                     await _context.SaveChangesAsync();
+                    context.ToDos.Attach(toDo);
+                        context.ToDos.AddOrUpdate(toDo);
+                     await context.SaveChangesAsync();
 
                     transaction.Commit();
                 }
@@ -89,27 +91,36 @@ namespace TotDoList.DAL.Repository
                     Logger.Error(ex);
                     transaction.Rollback();
                 }
-
+            }
             }
         }
 
-        public  Task<List<ToDo>> All()
+        public async Task<List<ToDo>> All()
         {
-            return  _context.ToDos.ToListAsync<ToDo>();
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                    return await context.ToDos.ToListAsync();
+            }
+            
         }
 
         public Task<ToDo> Get(int id)
         {
-            return _context.ToDos.FindAsync(id);
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                return context.ToDos.FindAsync(id);
+            }
         }
 
         public async Task DeleteAll()
         {
-            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                using (var transaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
-                    await Task.Run(() => _context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {typeof(ToDo).Name}"));
+                    await Task.Run(() => context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {typeof(ToDo).Name}"));
 
                     transaction.Commit();
                 }
@@ -118,17 +129,19 @@ namespace TotDoList.DAL.Repository
                     Logger.Error(ex);
                     transaction.Rollback();
                 }
-
+            }
             }
         }
 
         public  async Task Delete(int idDelete)
         {
-            using (var transaction = _context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            using (ToDoListDbContext context = new ToDoListDbContext())
+            {
+                using (var transaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
-                    await Task.Run(()=> _context.ToDos.Remove(Get(idDelete).Result));
+                    await Task.Run(()=> context.ToDos.Remove(Get(idDelete).Result));
 
                     transaction.Commit();
                 }
@@ -137,7 +150,7 @@ namespace TotDoList.DAL.Repository
                     Logger.Error(ex);
                     transaction.Rollback();
                 }
-
+            }
             }
         }
     }
