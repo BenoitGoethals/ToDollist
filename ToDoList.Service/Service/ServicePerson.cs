@@ -12,12 +12,12 @@ namespace ToDoList.Service.Service
    public class ServicePerson:IService<Person>
     {
     
-        private readonly IReposotory<Person> _reposotoryPerson = new PersonRepository();
+        private readonly IReposotory<Person> _reposotoryPerson;// = new PersonRepository();
+
+
 
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        public ServicePerson()
-        {
-        }
+     
 
         public ServicePerson(IReposotory<Person> reposotoryPerson)
         {
@@ -25,6 +25,10 @@ namespace ToDoList.Service.Service
             
         }
 
+        public ServicePerson()
+        {
+            
+        }
         public async  Task Add(Person t)
         {
             Logger.Info($"add : {t}");

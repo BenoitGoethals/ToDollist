@@ -11,9 +11,9 @@ namespace ToDoList.Service.Service
 {
     public class ServiceToDo:IService<ToDo>
     {
-        private static IService<ToDo> service=new ServiceToDo();
+        private static IService<ToDo> _service;//=new ServiceToDo();
 
-        private readonly  IReposotory<ToDo> _reposotory = new ToDoRepository();
+        private readonly IReposotory<ToDo> _reposotory;// = new ToDoRepository();
 
         private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -87,9 +87,5 @@ namespace ToDoList.Service.Service
 
 
 
-        public static IService<ToDo> Instance()
-        {
-            return service;
-        }
     }
 }

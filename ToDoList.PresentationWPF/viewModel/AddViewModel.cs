@@ -16,7 +16,8 @@ using ToDoList.Service.Service;
 namespace ToDoList.PresentationWPF.viewModel
 {
    public  class AddViewModel:ViewModel, IViewModelNotifyer
-    {
+   {
+       private IService<ToDo> serviceToDo;
         private ToDo _toDoAdd = new ToDo(){StatusTask = Status.Created,DateTimeCreated = DateTime.Now,ExpireDate = DateTime.Now.AddDays(1)};
 
         public ToDo ToDoAdd
@@ -39,7 +40,7 @@ namespace ToDoList.PresentationWPF.viewModel
             {
              //   await Task.Run(() =>
                //  {
-                     await ServiceToDo.Instance().Add(ToDoAdd);
+                     await serviceToDo.Add(ToDoAdd);
                  //});
              
 

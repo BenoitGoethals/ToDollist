@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Autofac;
 using ToDoList.Domain;
 using ToDoList.PresentationWPF.Annotations;
 using ToDoList.PresentationWPF.utils;
@@ -17,9 +18,16 @@ using ToDoList.Service.Service;
 namespace ToDoList.PresentationWPF.viewModel
 {
   public  class MainViewModel:ViewModel, IViewModelNotifyer
-    {
+  {
 
-        private object _stocksLock = new object();
+      private readonly IService<ToDo> ServiceToDo= Program.Container.Resolve<IService<ToDo>>();
+
+        public MainViewModel(ServiceToDo serviceToDo)
+      {
+          ServiceToDo = serviceToDo;
+      }
+
+      private object _stocksLock = new object();
         public ToDo SelectetToDo
         {
             get => _selectetToDo;
@@ -39,7 +47,7 @@ namespace ToDoList.PresentationWPF.viewModel
         public MainViewModel()
         {
             App.mediator.SenderHandler += Mediator_SenderHandler;
-            var slowTask = Task<Task<List<ToDo>>>.Factory.StartNew(() => ServiceToDo.Instance().All());
+            var slowTask = Task<Task<List<ToDo>>>.Factory.StartNew(() => ServiceToDo.All());
 
             ToDos = new AsyncObservableCollection<ToDo>(slowTask.Result.Result);
             
@@ -47,7 +55,7 @@ namespace ToDoList.PresentationWPF.viewModel
 
             DeleteCommand = new RelayCommand(t =>
             {
-                Task.Factory.StartNew(() => ServiceToDo.Instance().Delete(_selectetToDo));
+                Task.Factory.StartNew(() => ServiceToDo.Delete(_selectetToDo));
                 lock (_stocksLock)
                 {
                     ToDos.Remove(t as ToDo);

@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ToDoList.PresentationWPF.App</StartupObject>
+    <StartupObject>ToDoList.PresentationWPF.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -151,6 +151,10 @@
     <ProjectReference Include="..\ToDoList.Service\ToDoList.Service.csproj">
       <Project>{24c1d446-7b08-4ad9-954e-f193603aece8}</Project>
       <Name>ToDoList.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TotDoList.DAL\TotDoList.DAL.csproj">
+      <Project>{AA97E59A-F201-4210-AD47-4FBB9E5E85D0}</Project>
+      <Name>TotDoList.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
