@@ -104,11 +104,11 @@ namespace TotDoList.DAL.Repository
             
         }
 
-        public Task<ToDo> Get(int id)
+        public async Task<ToDo> Get(int id)
         {
             using (ToDoListDbContext context = new ToDoListDbContext())
             {
-                return context.ToDos.FindAsync(id);
+                return await context.ToDos.FindAsync(id);
             }
         }
 
@@ -141,7 +141,7 @@ namespace TotDoList.DAL.Repository
             {
                 try
                 {
-                    await Task.Run(()=> context.ToDos.Remove(Get(idDelete).Result));
+                    await Task.Run(()=> context.ToDos.Remove(context.ToDos.Find(idDelete)));
 
                     transaction.Commit();
                 }
